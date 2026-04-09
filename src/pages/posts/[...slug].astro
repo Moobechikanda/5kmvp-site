@@ -53,7 +53,11 @@ const relatedPosts = sortedPosts
     <!-- Post image -->
     {post.data.ogImage && (
       <img
-        src={post.data.ogImage}
+       src={
+  typeof post.data.ogImage === "string"
+    ? post.data.ogImage
+    : post.data.ogImage?.src
+}
         alt={post.data.title}
         class="w-full rounded-lg mb-6"
       />

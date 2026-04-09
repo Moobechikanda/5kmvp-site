@@ -104,7 +104,7 @@ const faqItems = [
   },
 ];
 
-// --- VIDEO SCHEMA (JSON-LD) ---
+// --- VIDEO SCHEMA ---
 const videoStructuredData = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
@@ -119,15 +119,21 @@ const videoStructuredData = {
     "name": "5kmvp"
   }
 };
+
+// SAFE IMAGE HANDLER
+const getOgImage = (post) => {
+  const img = post.data.ogImage;
+
+  if (!img) return "/images/home.png";
+  if (typeof img === "string") return img;
+
+  return img.src || "/images/home.png";
+};
 ---
 
 <Layout title={`Tools for Solopreneurs | ${SITE.title}`}>
 
-  <!-- VIDEO STRUCTURED DATA -->
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(videoStructuredData)}
-  />
+  <script type="application/ld+json" set:html={JSON.stringify(videoStructuredData)} />
 
   <Header />
 
@@ -135,33 +141,17 @@ const videoStructuredData = {
 
     <!-- HERO -->
     <section class="py-16 bg-gray-50 dark:bg-gray-900">
+
       {sortedPosts.length > 0 && (
         <a
           href={`/posts/${sortedPosts[0].slug}/`}
           class="block w-full max-w-6xl mx-auto px-4 rounded-xl overflow-hidden shadow-lg"
         >
-          {sortedPosts.length > 0 && (
-  <a
-    href={`/posts/${sortedPosts[0].slug}/`}
-    class="block w-full max-w-6xl mx-auto px-4 rounded-xl overflow-hidden shadow-lg"
-  >
-    <img
-      src={sortedPosts[0].data.ogImage || "/images/home.png"}
-      alt={sortedPosts[0].data.title}
-      class="w-full rounded-lg mb-6"
-    />
-
-    <div class="mt-6 text-center">
-      <h1 class="text-4xl font-bold mb-3">
-        {sortedPosts[0].data.title}
-      </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300">
-        {sortedPosts[0].data.description}
-      </p>
-    </div>
-  </a>
-)}
-
+          <img
+            src={getOgImage(sortedPosts[0])}
+            alt={sortedPosts[0].data.title}
+            class="w-full rounded-lg mb-6"
+          />
 
           <div class="mt-6 text-center">
             <h1 class="text-4xl font-bold mb-3">
@@ -173,9 +163,10 @@ const videoStructuredData = {
           </div>
         </a>
       )}
+
     </section>
 
-    <!-- VIDEO SECTION (SEO BOOST) -->
+    <!-- VIDEO SECTION -->
     <section class="max-w-5xl mx-auto px-4 py-16 text-center">
       <h2 class="text-3xl font-bold mb-6">
         How to Succeed as a Solopreneur
@@ -183,22 +174,15 @@ const videoStructuredData = {
 
       <p class="text-gray-600 dark:text-gray-300 mb-6">
         Learn how to build, grow, and scale your solopreneur business using proven systems,
-        productivity tools, and smart strategies. This video covers essential skills,
-        tools, and habits every successful solopreneur uses.
+        productivity tools, and smart strategies.
       </p>
 
-      <video
-        controls
-        preload="metadata"
-        class="w-full rounded-xl shadow-lg"
-      >
+      <video controls preload="metadata" class="w-full rounded-xl shadow-lg">
         <source src="/video/how-to-succeed-as-a-solopreneur.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
       </video>
 
       <p class="text-sm text-gray-500 mt-4">
-         how to succeed as a solopreneur, solopreneur tips, tools for solopreneurs,
-        productivity for entrepreneurs, solopreneur business growth.
+        how to succeed as a solopreneur, tools for solopreneurs, productivity, business growth.
       </p>
     </section>
 
@@ -220,7 +204,7 @@ const videoStructuredData = {
       <div class="grid md:grid-cols-3 gap-8">
         {highlightBlocks.map((block) => (
           <HighlightBox title={block.title}>
-            <ul class="text-gray-800 dark:text-gray-200 space-y-2">
+            <ul class="space-y-2">
               {block.items.map((item) => <li>{item}</li>)}
             </ul>
           </HighlightBox>
@@ -248,7 +232,7 @@ const videoStructuredData = {
         {recentPosts.slice(0, SITE.postPerIndex).map((post) => (
           <a href={`/posts/${post.slug}/`} class="block">
             <img
-              src={post.data.ogImage || "/images/home.png"}
+              src={getOgImage(post)}
               class="rounded mb-2"
             />
             <h3>{post.data.title}</h3>
