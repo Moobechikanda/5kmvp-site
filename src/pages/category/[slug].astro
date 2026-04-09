@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+
+// 1️⃣ Generate all category pages
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  const categories = Array.from(
+    new Set(posts.flatMap(post => post.data.tags ?? []))
+  );
+
+  return categories.map(category => ({
+    params: { slug: category },
+  }));
+}
+
+// 2️⃣ Get current category from URL
+const { slug } = Astro.params;
+
+// 3️⃣ Get all posts once
+const posts = await getCollection("blog");
+
+// 4️⃣ Filter posts by this category
+const filteredPosts = posts.filter(post =>
+  post.data.tags?.includes(slug)
+);
+---
+
+<Layout title={`Category: ${slug}`}>
+  <main class="max-w-5xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-8 capitalize">
+      {slug}
+    </h1>
+
+    {filteredPosts.length === 0 ? (
+      <p>No posts found in this category.</p>
+    ) : (
+      <div class="grid md:grid-cols-2 gap-8">
+        {filteredPosts.map(post => (
+          <article class="border p-6 rounded-lg hover:shadow-lg transition">
+            <h2 class="text-2xl font-semibold mb-2">
+              <a
+                href={`/posts/${post.slug}/`}
+                class="hover:underline"
+              >
+                {post.data.title}
+              </a>
+            </h2>
+
+            {post.data.pubDatetime && (
+              <p class="text-sm text-gray-500 mb-2">
+                {new Date(post.data.pubDatetime).toLocaleDateString()}
+              </p>
+            )}
+
+            <p class="mt-2">
+              {post.data.description}
+            </p>
+          </article>
+        ))}
+      </div>
+    )}
+  </main>
+</Layout>

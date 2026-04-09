@@ -51,7 +51,7 @@ const structuredData = {
 <!doctype html>
 <html
   dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
+  lang={SITE.lang ?? "en"}
   class={`${scrollSmooth && "scroll-smooth"}`}
 >
   <head>
@@ -111,6 +111,21 @@ const structuredData = {
       is:inline
       set:html={JSON.stringify(structuredData)}
     />
+
+<script type="application/ld+json" is:inline>
+{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map(q => ({
+    "@type": "Question",
+    name: q.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: q.answer,
+    },
+  })),
+})}
+</script>
 
     <!-- Enable RSS feed auto-discovery  -->
     <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->

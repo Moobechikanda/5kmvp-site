@@ -1,0 +1,92 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+
+const pageTitle = "About | 5kmvp";
+
+// Top recommended tools (affiliate links)
+const recommendedTools = [
+  {
+    name: "Notion",
+    description: "Organize your workflow and projects efficiently with Notion.",
+    image: "/images/tools/notion.jpg",
+    link: "https://www.notion.so/?affiliate=YOURCODE"
+  },
+  {
+    name: "ClickUp",
+    description: "Manage tasks and productivity with ClickUp’s powerful platform.",
+    image: "/images/tools/clickup.jpg",
+    link: "https://clickup.com/?affiliate=YOURCODE"
+  },
+  {
+    name: "Zapier",
+    description: "Automate repetitive tasks and connect your apps seamlessly.",
+    image: "/images/tools/zapier.jpg",
+    link: "https://zapier.com/?affiliate=YOURCODE"
+  },
+];
+---
+
+<Layout title={pageTitle} description="Learn about Moobe Chikanda and the mission of 5kmvp to help solopreneurs grow and succeed.">
+  <Header />
+
+  <main class="max-w-5xl mx-auto px-4 py-16">
+
+    <!-- HERO -->
+    <section class="text-center mb-16">
+      <h1 class="text-4xl font-bold mb-4">About 5kmvp</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Helping solopreneurs build, launch, and scale their businesses using the best tools, systems, and strategies.
+      </p>
+      <img src="/images/home.jpg" alt="5kmvp Logo" class="mx-auto mt-6 rounded-lg shadow-lg w-full max-w-md" />
+    </section>
+
+    <!-- WHO I AM -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-semibold mb-4">Hi, I’m Moobe Chikanda</h2>
+      <div class="flex flex-col md:flex-row items-center gap-6 mb-4">
+        <img src="/images/author.jpg" alt="Moobe Chikanda" class="w-32 h-32 rounded-full shadow-lg" />
+        <p class="text-gray-700 dark:text-gray-300">
+          I’m passionate about helping solopreneurs succeed by sharing proven strategies, tools, and insights. 
+          On 5kmvp, you’ll find actionable tips, tool recommendations, and guides to make running a solo business easier and more efficient.
+        </p>
+      </div>
+    </section>
+
+    <!-- MISSION -->
+    <section class="mb-12 bg-gray-50 dark:bg-gray-900 p-8 rounded-xl">
+      <h2 class="text-3xl font-semibold mb-4">Our Mission</h2>
+      <p class="text-gray-700 dark:text-gray-300">
+        At 5kmvp, our mission is to empower solopreneurs with the knowledge and tools they need to run their businesses efficiently. 
+        We focus on productivity, marketing, and automation strategies that anyone can implement without a big team.
+      </p>
+    </section>
+
+    <!-- TOP TOOLS / AFFILIATE LINKS -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-semibold mb-6">Top Tools I Recommend</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        {recommendedTools.map((tool) => (
+          <a href={tool.link} target="_blank" class="block rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+            <img src={tool.image} alt={tool.name} class="w-full h-48 object-cover" />
+            <div class="p-4">
+              <h3 class="text-xl font-semibold mb-2">{tool.name}</h3>
+              <p class="text-gray-700 dark:text-gray-300">{tool.description}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="text-center mt-12">
+      <a href="/" class="text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-6 py-3 font-semibold">
+        Back to Homepage
+      </a>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

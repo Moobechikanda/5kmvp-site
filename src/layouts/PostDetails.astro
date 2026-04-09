@@ -14,6 +14,7 @@ import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import { SITE } from "@/config";
+import BreadcrumbSchema from "../components/BreadcrumbSchema.astro";
 
 type Props = {
   post: CollectionEntry<"blog">;
@@ -81,8 +82,51 @@ const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
   currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
 ---
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{frontmatter.title}",
+  "description": "{frontmatter.description}",
+  "datePublished": "{frontmatter.pubDatetime}",
+  "author": {
+    "@type": "Person",
+    "name": "Moobe"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Your Blog Name"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{Astro.url}"
+  }
+}
+</script>
 
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BlogPosting",
+ "headline": "{frontmatter.title}",
+ "description": "{frontmatter.description}",
+ "datePublished": "{frontmatter.pubDatetime}",
+ "author": {
+   "@type": "Person",
+   "name": "Moobe"
+ },
+ "publisher": {
+   "@type": "Organization",
+   "name": "Your Blog Name"
+ },
+ "mainEntityOfPage": {
+   "@type": "WebPage",
+   "@id": "{Astro.url}"
+ }
+}
+</script>
 <Layout {...layoutProps}>
+<BreadcrumbSchema title={frontmatter.title} />
   <Header />
   <BackButton />
   <main

@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+
+const posts = await getCollection("blog");
+const sortedPosts = getSortedPosts(posts);
+
+const featuredPosts = sortedPosts.filter(post => post.data.featured);
+const latestPosts = sortedPosts.filter(post => !post.data.featured);
+---
+
+<Layout title="Blog Hub">
+  <main class="max-w-5xl mx-auto px-4 py-12">
+
+    {featuredPosts.length > 0 && (
+      <section class="mb-12">
+        <h1 class="text-4xl font-bold mb-4">Featured Post</h1>
+
+        {featuredPosts.map(post => (
+          <a
+            href={`/posts/${post.slug}`}
+            class="block border p-6 rounded hover:shadow-lg mb-6"
+          >
+            <h2 class="text-3xl font-semibold">{post.data.title}</h2>
+            <p class="mt-2 text-gray-600">{post.data.description}</p>
+          </a>
+        ))}
+      </section>
+    )}
+
+    <section>
+      <h2 class="text-2xl font-bold mb-4">Latest Posts</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {latestPosts.map(post => (
+          <article class="border p-4 rounded hover:shadow-lg">
+            <h3 class="text-xl font-semibold mb-2">
+              <a
+                href={`/posts/${post.slug}`}
+                class="hover:underline"
+              >
+                {post.data.title}
+              </a>
+            </h3>
+
+            <p class="text-sm text-gray-500">
+              {post.data.pubDatetime || post.data.date}
+            </p>
+
+            <p class="mt-2">
+              {post.data.description}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+  </main>
+</Layout>

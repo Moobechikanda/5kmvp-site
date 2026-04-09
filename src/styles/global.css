@@ -1,8 +1,10 @@
 @import "tailwindcss";
 @import "./typography.css";
 
+/* Custom dark variant for Tailwind */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* Light theme variables */
 :root,
 html[data-theme="light"] {
   --background: #fdfdfd;
@@ -12,6 +14,7 @@ html[data-theme="light"] {
   --border: #ece9e9;
 }
 
+/* Dark theme variables */
 html[data-theme="dark"] {
   --background: #212737;
   --foreground: #eaedf3;
@@ -20,6 +23,7 @@ html[data-theme="dark"] {
   --border: #ab4b08;
 }
 
+/* Map theme variables to Tailwind */
 @theme inline {
   --font-app: var(--font-google-sans-code);
   --color-background: var(--background);
@@ -30,27 +34,54 @@ html[data-theme="dark"] {
 }
 
 @layer base {
+  /* Base resets */
   * {
     @apply border-border outline-accent/75;
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
+
   html {
     @apply overflow-y-scroll scroll-smooth;
   }
+
   body {
     @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
   }
+
   a,
   button {
     @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
+  /* Highlight box styling for Key Takeaways */
+  .highlight-box {
+    @apply p-6 rounded-lg border-l-4 mb-6 shadow-lg;
+    background-color: #fff3b0; /* bright yellow for light mode */
+    border-color: #ffd700; /* stronger border */
+    color: #1a1a1a; /* dark text for readability */
+    font-weight: 500;
+  }
+
+  html[data-theme="dark"] .highlight-box {
+    background-color: #78350f; /* rich dark yellow/orange */
+    border-color: #f59e0b; /* brighter accent border */
+    color: #fef3c7; /* light text */
+    font-weight: 500;
+  }
+
+  /* Extra scroll margin for anchors */
+  :target {
+    scroll-margin-block: 1rem;
+  }
 }
 
+/* Utility classes */
 @utility max-w-app {
   @apply max-w-3xl;
 }
@@ -59,12 +90,7 @@ html[data-theme="dark"] {
   @apply mx-auto w-full max-w-app px-4;
 }
 
+/* Active nav link styling */
 .active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
-}
-
-/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
-/* Anything that has been anchored to should have extra scroll margin */
-:target {
-  scroll-margin-block: 1rem;
 }
