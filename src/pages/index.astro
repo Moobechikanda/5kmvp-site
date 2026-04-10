@@ -16,8 +16,14 @@ const sortedPosts = getSortedPosts(posts);
 
 type PostType = typeof sortedPosts[number];
 
-const featuredPosts = sortedPosts.filter((post: PostType) => post.data.featured);
-const recentPosts = sortedPosts.filter((post: PostType) => !post.data.featured);
+// --- Safe filtering ---
+const featuredPosts: PostType[] = sortedPosts.filter(
+  (post: PostType) => post.data.featured
+);
+
+const recentPosts: PostType[] = sortedPosts.filter(
+  (post: PostType) => !post.data.featured
+);
 
 // --- Category highlights ---
 const highlightCategories = ["tools", "marketing", "productivity"];
@@ -175,9 +181,9 @@ const getOgImage = (post: PostType): string => {
 
     <!-- AUTHOR -->
     <section class="max-w-7xl mx-auto px-4 py-12 border-y">
-      {authors.map((author) => (
+      {authors.map((author: typeof authors[number]) => (
         <div class="flex items-center gap-4">
-          <img src={author.image} class="w-20 h-20 rounded-full" />
+          <img src={author.image} alt={author.name} class="w-20 h-20 rounded-full" />
           <div>
             <h3 class="text-xl font-semibold">{author.name}</h3>
             <p>{author.bio}</p>
@@ -189,10 +195,10 @@ const getOgImage = (post: PostType): string => {
     <!-- HIGHLIGHTS -->
     <section class="max-w-7xl mx-auto px-4 py-12">
       <div class="grid md:grid-cols-3 gap-8">
-        {highlightBlocks.map((block) => (
+        {highlightBlocks.map((block: typeof highlightBlocks[number]) => (
           <HighlightBox title={block.title}>
             <ul class="space-y-2">
-              {block.items.map((item) => <li>{item}</li>)}
+              {block.items.map((item: string) => <li>{item}</li>)}
             </ul>
           </HighlightBox>
         ))}
@@ -204,7 +210,7 @@ const getOgImage = (post: PostType): string => {
       <section class="max-w-7xl mx-auto px-4 py-12">
         <h2 class="text-3xl font-bold mb-6">Featured</h2>
         <div class="grid md:grid-cols-3 gap-6">
-          {featuredPosts.map((post) => (
+          {featuredPosts.map((post: PostType) => (
             <Card {...post} href={`/posts/${post.slug}/`} />
           ))}
         </div>
@@ -216,9 +222,9 @@ const getOgImage = (post: PostType): string => {
       <h2 class="text-3xl font-bold mb-6">Latest Articles</h2>
 
       <div class="grid md:grid-cols-3 gap-6">
-        {recentPosts.slice(0, SITE.postPerIndex).map((post) => (
+        {recentPosts.slice(0, SITE.postPerIndex).map((post: PostType) => (
           <a href={`/posts/${post.slug}/`} class="block">
-            <img src={getOgImage(post)} class="rounded mb-2" />
+            <img src={getOgImage(post)} alt={post.data.title} class="rounded mb-2" />
             <h3>{post.data.title}</h3>
           </a>
         ))}
@@ -239,7 +245,7 @@ const getOgImage = (post: PostType): string => {
             {posts.length === 0 ? (
               <p>No posts yet</p>
             ) : (
-              posts.map((post) => (
+              posts.map((post: PostType) => (
                 <a href={`/posts/${post.slug}/`} class="block mb-2">
                   <h4>{post.data.title}</h4>
                 </a>
@@ -255,7 +261,7 @@ const getOgImage = (post: PostType): string => {
       <h2 class="text-3xl font-bold mb-6">Frequently Asked Questions</h2>
 
       <div class="space-y-6">
-        {faqItems.map((item) => (
+        {faqItems.map((item: typeof faqItems[number]) => (
           <div class="p-6 rounded-xl shadow">
             <h3 class="font-semibold mb-2">{item.question}</h3>
             <p>{item.answer}</p>
