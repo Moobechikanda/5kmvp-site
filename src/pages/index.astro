@@ -14,19 +14,21 @@ import { SITE } from "@/config";
 const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 
-const featuredPosts = sortedPosts.filter(post => post.data.featured);
-const recentPosts = sortedPosts.filter(post => !post.data.featured);
+type PostType = typeof sortedPosts[number];
+
+const featuredPosts = sortedPosts.filter((post: PostType) => post.data.featured);
+const recentPosts = sortedPosts.filter((post: PostType) => !post.data.featured);
 
 // --- Category highlights ---
 const highlightCategories = ["tools", "marketing", "productivity"];
 
 const categoryHighlights = highlightCategories.map((category) => {
-  const postsInCategory = sortedPosts.filter((post) =>
+  const postsInCategory = sortedPosts.filter((post: PostType) =>
     post.data.tags?.includes(category)
   );
 
   const uniquePosts = Array.from(
-    new Map(postsInCategory.map((p) => [p.slug, p])).values()
+    new Map(postsInCategory.map((p: PostType) => [p.slug, p])).values()
   );
 
   return {
@@ -76,28 +78,23 @@ const authors = [
 const faqItems = [
   {
     question: "What do solopreneurs need?",
-    answer:
-      "Solopreneurs need tools, skills, and systems to run efficiently.",
+    answer: "Solopreneurs need tools, skills, and systems to run efficiently.",
   },
   {
     question: "How to succeed as a solopreneur?",
-    answer:
-      "Success comes from systems and leverage.",
+    answer: "Success comes from systems and leverage.",
   },
   {
     question: "What skills are useful for solopreneurs?",
-    answer:
-      "Marketing, copywriting, design, and problem-solving.",
+    answer: "Marketing, copywriting, design, and problem-solving.",
   },
   {
     question: "What tools do solopreneurs use daily?",
-    answer:
-      "Notion, Canva, Zapier.",
+    answer: "Notion, Canva, Zapier.",
   },
   {
     question: "How do solopreneurs stay productive?",
-    answer:
-      "Systems, focus, and consistency.",
+    answer: "Systems, focus, and consistency.",
   },
 ];
 
@@ -117,8 +114,8 @@ const videoStructuredData = {
   }
 };
 
-// SAFE IMAGE HANDLER
-const getOgImage = (post) => {
+// --- SAFE IMAGE HANDLER ---
+const getOgImage = (post: PostType): string => {
   const img = post.data.ogImage;
 
   if (!img) return "/images/home.png";
