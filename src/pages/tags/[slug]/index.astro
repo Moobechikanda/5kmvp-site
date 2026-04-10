@@ -31,7 +31,7 @@ const filteredPosts = posts.filter(post => post.data.tags?.includes(slug));
                 {post.data.title}
               </a>
             </h2>
-            <p class="text-sm text-gray-500">{post.data.pubDatetime || post.data.date}</p>
+            <p class="text-sm text-gray-500">{post.data.pubDatetime}</p>
             <p class="mt-2">{post.data.description}</p>
           </article>
         ))}

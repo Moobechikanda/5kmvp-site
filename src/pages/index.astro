@@ -3,15 +3,12 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import HighlightBox from "@/components/HighlightBox.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
-import { SOCIALS } from "@/constants";
 
 // --- Fetch posts ---
 const posts = await getCollection("blog");
@@ -80,27 +77,27 @@ const faqItems = [
   {
     question: "What do solopreneurs need?",
     answer:
-      "Solopreneurs need tools, skills, and systems to run efficiently. Productivity, marketing, and automation tools allow one person to manage everything.",
+      "Solopreneurs need tools, skills, and systems to run efficiently.",
   },
   {
     question: "How to succeed as a solopreneur?",
     answer:
-      "Success comes from systems and leverage. Automate tasks, focus on high-impact work, and stay consistent.",
+      "Success comes from systems and leverage.",
   },
   {
     question: "What skills are useful for solopreneurs?",
     answer:
-      "Key skills include marketing, copywriting, design, and problem-solving combined with tool usage.",
+      "Marketing, copywriting, design, and problem-solving.",
   },
   {
     question: "What tools do solopreneurs use daily?",
     answer:
-      "Common tools include Notion, Canva, and Zapier for automation and productivity.",
+      "Notion, Canva, Zapier.",
   },
   {
     question: "How do solopreneurs stay productive?",
     answer:
-      "They use systems, eliminate distractions, and focus on high-leverage activities.",
+      "Systems, focus, and consistency.",
   },
 ];
 
@@ -109,7 +106,7 @@ const videoStructuredData = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
   "name": "How to Succeed as a Solopreneur",
-  "description": "Learn how to build, grow, and scale your solopreneur business using tools, systems, and proven strategies.",
+  "description": "Learn how to build and scale your solopreneur business.",
   "thumbnailUrl": `${SITE.website}/images/hero.jpg`,
   "uploadDate": "2026-04-09",
   "contentUrl": `${SITE.website}/video/how-to-succeed-as-a-solopreneur.mp4`,
@@ -134,10 +131,10 @@ const getOgImage = (post) => {
 <Layout title={`Tools for Solopreneurs | ${SITE.title}`}>
 
   <script
-  type="application/ld+json"
-  is:inline
-  set:html={JSON.stringify(videoStructuredData)}
-/>
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(videoStructuredData)}
+  />
 
   <Header />
 
@@ -145,7 +142,6 @@ const getOgImage = (post) => {
 
     <!-- HERO -->
     <section class="py-16 bg-gray-50 dark:bg-gray-900">
-
       {sortedPosts.length > 0 && (
         <a
           href={`/posts/${sortedPosts[0].slug}/`}
@@ -167,27 +163,17 @@ const getOgImage = (post) => {
           </div>
         </a>
       )}
-
     </section>
 
-    <!-- VIDEO SECTION -->
+    <!-- VIDEO -->
     <section class="max-w-5xl mx-auto px-4 py-16 text-center">
       <h2 class="text-3xl font-bold mb-6">
         How to Succeed as a Solopreneur
       </h2>
 
-      <p class="text-gray-600 dark:text-gray-300 mb-6">
-        Learn how to build, grow, and scale your solopreneur business using proven systems,
-        productivity tools, and smart strategies.
-      </p>
-
-      <video controls preload="metadata" class="w-full rounded-xl shadow-lg">
+      <video controls class="w-full rounded-xl shadow-lg">
         <source src="/video/how-to-succeed-as-a-solopreneur.mp4" type="video/mp4" />
       </video>
-
-      <p class="text-sm text-gray-500 mt-4">
-        how to succeed as a solopreneur, tools for solopreneurs, productivity, business growth.
-      </p>
     </section>
 
     <!-- AUTHOR -->
@@ -197,7 +183,7 @@ const getOgImage = (post) => {
           <img src={author.image} class="w-20 h-20 rounded-full" />
           <div>
             <h3 class="text-xl font-semibold">{author.name}</h3>
-            <p class="text-gray-600 dark:text-gray-300">{author.bio}</p>
+            <p>{author.bio}</p>
           </div>
         </div>
       ))}
@@ -235,10 +221,7 @@ const getOgImage = (post) => {
       <div class="grid md:grid-cols-3 gap-6">
         {recentPosts.slice(0, SITE.postPerIndex).map((post) => (
           <a href={`/posts/${post.slug}/`} class="block">
-            <img
-              src={getOgImage(post)}
-              class="rounded mb-2"
-            />
+            <img src={getOgImage(post)} class="rounded mb-2" />
             <h3>{post.data.title}</h3>
           </a>
         ))}
@@ -276,7 +259,7 @@ const getOgImage = (post) => {
 
       <div class="space-y-6">
         {faqItems.map((item) => (
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+          <div class="p-6 rounded-xl shadow">
             <h3 class="font-semibold mb-2">{item.question}</h3>
             <p>{item.answer}</p>
           </div>
