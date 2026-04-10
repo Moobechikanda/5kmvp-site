@@ -4,38 +4,64 @@ import Layout from "@/layouts/Layout.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  const tags = Array.from(new Set(posts.flatMap(post => post.data.tags || [])));
 
-  return tags.map(tag => ({
+  const tags = Array.from(
+    new Set(posts.flatMap(post => post.data.tags || []))
+  );
+
+  return tags.map((tag) => ({
     params: { slug: tag },
   }));
 }
 
-const { slug } = Astro.params;
+const { slug } = Astro.params as { slug: string };
+
 const posts = await getCollection("blog");
-const filteredPosts = posts.filter(post => post.data.tags?.includes(slug));
+
+const filteredPosts = posts.filter((post) =>
+  post.data.tags?.includes(slug)
+);
 ---
 
 <Layout title={`Tag: ${slug}`}>
+
   <main class="max-w-5xl mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold mb-8 capitalize">Tag: {slug}</h1>
+
+    <h1 class="text-4xl font-bold mb-8 capitalize">
+      Tag: {slug}
+    </h1>
 
     {filteredPosts.length === 0 ? (
       <p>No posts found with this tag.</p>
     ) : (
       <div class="grid md:grid-cols-2 gap-8">
-        {filteredPosts.map(post => (
-          <article key={post.id} class="border p-4 rounded hover:shadow-lg transition">
+
+        {filteredPosts.map((post) => (
+          <article class="border p-4 rounded hover:shadow-lg transition">
+
             <h2 class="text-2xl font-semibold mb-2">
-              <a href={`/posts/${post.id.replace(/\.md$/, "")}`} class="hover:underline">
+              <a
+                href={`/posts/${post.slug}/`}
+                class="hover:underline"
+              >
                 {post.data.title}
               </a>
             </h2>
-            <p class="text-sm text-gray-500">{post.data.pubDatetime}</p>
-            <p class="mt-2">{post.data.description}</p>
+
+            <p class="text-sm text-gray-500">
+              {post.data.pubDatetime}
+            </p>
+
+            <p class="mt-2">
+              {post.data.description}
+            </p>
+
           </article>
         ))}
+
       </div>
     )}
+
   </main>
+
 </Layout>
