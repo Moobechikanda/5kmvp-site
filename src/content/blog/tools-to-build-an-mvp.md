@@ -14,7 +14,9 @@ description: |
   Discover the best tools to build and launch an MVP as a solopreneur in 2026. Learn how to go from idea to product quickly using the right tech stack.
 ---
 ## Introduction
-![mvp image](/images/mvp-image.png)
+
+![mvp image](/public/images/mvp-image.Png)
+
 ## The 2-week MVP challenge
 
 Here's the reality most solopreneurs face. You have a great idea, limited savings, and exactly zero employees. Traditional startup advice tells you to hire a dev team, raise funding, and spend six months building. But that path is closed to you. You need something different.
