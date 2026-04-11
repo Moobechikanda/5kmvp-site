@@ -11,7 +11,7 @@
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "postbuild": "pagefind --site dist"
+    "postbuild": "echo 'skipping pagefind for now'"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.14",
