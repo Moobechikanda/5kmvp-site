@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/analysis-of-market-demand-for-web-programming",
+      "destination": "/posts/market-demand-for-programming-languages-and-solopreneur-tools",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2013/09/17/redefining-mvp-minimum-valuable-product/",
+      "destination": "/posts/tools-to-build-an-mvp",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2013/09/21/5-things-you-need-to-know-before-trying-to-scale/",
+      "destination": "/posts/top-problems-solopreneurs-want-to-solve",
+      "permanent": true
+    }
+  ]
+}

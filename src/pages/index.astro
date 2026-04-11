@@ -16,7 +16,6 @@ const sortedPosts = getSortedPosts(posts);
 
 type PostType = typeof sortedPosts[number];
 
-// --- Safe filtering ---
 const featuredPosts: PostType[] = sortedPosts.filter(
   (post: PostType) => post.data.featured
 );
@@ -131,7 +130,7 @@ const getOgImage = (post: PostType): string => {
 };
 ---
 
-<Layout title={`Tools for Solopreneurs | ${SITE.title}`}>
+<Layout title={`Best Tools for Solopreneurs (2026) | ${SITE.title}`}>
 
   <script
     type="application/ld+json"
@@ -167,6 +166,40 @@ const getOgImage = (post: PostType): string => {
         </a>
       )}
     </section>
+
+    <!-- SEO INTRO -->
+    <section class="max-w-4xl mx-auto px-4 py-6 text-center">
+      <p class="text-gray-600 dark:text-gray-300">
+        This site helps solopreneurs discover the best tools to build MVPs,
+        automate workflows, and scale their businesses faster. Learn which tools
+        to use at each stage—from idea validation to growth.
+      </p>
+    </section>
+
+    <!-- START HERE (SEO POWER SECTION) -->
+    <section class="max-w-5xl mx-auto px-4 py-12 text-center">
+      <h2 class="text-2xl font-bold mb-6">Start Here</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <a href="/posts/best-tools-for-solopreneurs" class="block p-6 border rounded-xl hover:shadow-lg">
+          Best Tools for Solopreneurs (Complete Guide)
+        </a>
+
+        <a href="/posts/tools-to-build-an-mvp" class="block p-6 border rounded-xl hover:shadow-lg">
+          Tools to Build an MVP
+        </a>
+
+        <a href="/posts/market-demand-solopreneur-tools" class="block p-6 border rounded-xl hover:shadow-lg">
+          Market Demand for Solopreneur Tools
+        </a>
+
+        <a href="/posts/how-solopreneurs-stay-productive" class="block p-6 border rounded-xl hover:shadow-lg">
+          Productivity Systems for Solopreneurs
+        </a>
+      </div>
+    </section>
+
+    <!-- KEEP EVERYTHING BELOW SAME -->
 
     <!-- VIDEO -->
     <section class="max-w-5xl mx-auto px-4 py-16 text-center">
