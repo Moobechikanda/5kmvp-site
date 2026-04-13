@@ -10,314 +10,248 @@ import getSortedPosts from "@/utils/getSortedPosts";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 
-// --- Fetch posts ---
 const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 
 type PostType = typeof sortedPosts[number];
 
-const featuredPosts: PostType[] = sortedPosts.filter(
-  (post: PostType) => post.data.featured
-);
+const featuredPosts = sortedPosts.filter(p => p.data.featured);
+const recentPosts = sortedPosts.filter(p => !p.data.featured);
 
-const recentPosts: PostType[] = sortedPosts.filter(
-  (post: PostType) => !post.data.featured
-);
-
-// --- Category highlights ---
 const highlightCategories = ["tools", "marketing", "productivity"];
 
-const categoryHighlights = highlightCategories.map((category) => {
-  const postsInCategory = sortedPosts.filter((post: PostType) =>
-    post.data.tags?.includes(category)
-  );
-
-  const uniquePosts = Array.from(
-    new Map(postsInCategory.map((p: PostType) => [p.slug, p])).values()
+const categoryHighlights = highlightCategories.map(category => {
+  const postsInCategory = sortedPosts.filter(p =>
+    p.data.tags?.includes(category)
   );
 
   return {
     category,
-    posts: uniquePosts.slice(0, 2),
+    posts: postsInCategory.slice(0, 2),
   };
 });
 
-// --- Highlight blocks ---
 const highlightBlocks = [
   {
     title: "Productivity Tools",
     items: [
-      "Use Notion or ClickUp to manage your workflow",
-      "Automate repetitive tasks using Zapier",
-      "Track your daily output and optimize your time",
+      "Notion",
+      "ClickUp",
+      "Zapier"
     ],
   },
   {
     title: "Marketing Tools",
     items: [
-      "Use email tools like ConvertKit",
-      "Schedule content with Buffer",
-      "Analyze traffic using Google Analytics",
+      "ConvertKit",
+      "Buffer",
+      "Google Analytics"
     ],
   },
   {
     title: "Business Tools",
     items: [
-      "Use Stripe or PayPal for payments",
-      "Build landing pages with Webflow",
-      "Use Canva for design work",
+      "Stripe",
+      "Webflow",
+      "Canva"
     ],
   },
 ];
 
-// --- Author ---
 const authors = [
   {
     name: "Moobe Chikanda",
-    bio: "Helping solopreneurs build, launch, and scale using the best tools and systems",
+    bio: "Helping solopreneurs build systems that scale",
     image: "/images/home.png",
   },
 ];
 
-// --- FAQ ---
 const faqItems = [
   {
-    question: "What do solopreneurs need?",
-    answer: "Solopreneurs need tools, skills, and systems to run efficiently.",
+    question: "What do solopreneurs need to succeed in 2026?",
+    answer: "Solopreneurs need three core things: tools, systems, and skills. Tools help you execute faster (like Notion, Canva, Zapier), systems help you stay organized (like workflows, automation, and templates), and skills like marketing, copywriting, and sales help you generate income. Without all three working together, growth becomes inconsistent and slow.",
   },
   {
-    question: "How to succeed as a solopreneur?",
-    answer: "Success comes from systems and leverage.",
+    question: "How do I choose the best tools as a solopreneur?",
+    answer: "The best tools are not the most popular ones — they are the ones that reduce friction in your workflow. Choose tools based on ease of use (can you learn it in under 1 day?), integration (does it connect with other tools?), cost efficiency (does it save more time than it costs money?), and stage of business (idea, MVP, growth, scaling). Beginners should focus on Notion, Canva, and Google Workspace before advanced tools like automation stacks.",
   },
   {
-    question: "What skills are useful for solopreneurs?",
-    answer: "Marketing, copywriting, design, and problem-solving.",
+    question: "What tools do most successful solopreneurs use daily?",
+    answer: "Most successful solopreneurs rely on a small but powerful tech stack: Notion for planning and documentation, Canva for design and branding, Zapier or Make for automation, Google Docs/Sheets for lightweight operations, and ChatGPT/AI tools for content and research. The key is not using many tools, but building a simple system that connects a few powerful ones.",
   },
   {
-    question: "What tools do solopreneurs use daily?",
-    answer: "Notion, Canva, Zapier.",
+    question: "How do solopreneurs stay productive without burnout?",
+    answer: "Productivity comes from systems, not motivation. Solopreneurs avoid burnout by time blocking their day (deep work vs admin work), automating repetitive tasks, using templates instead of starting from scratch, and focusing on high-impact tasks only (80/20 rule). Burnout usually happens when everything is manual — systems fix that.",
   },
   {
-    question: "How do solopreneurs stay productive?",
-    answer: "Systems, focus, and consistency.",
+    question: "Can solopreneurs build profitable businesses alone?",
+    answer: "Yes — modern solopreneurs can build highly profitable businesses alone using digital tools and automation. The key shift is leverage: AI replaces repetitive content creation, automation replaces manual workflows, and digital products replace physical operations. Many solopreneurs now run 6-figure businesses without employees by using systems instead of manpower.",
+  },
+  {
+    question: "What skills are useful to become a successful solopreneur?",
+    answer: "The most important skills include marketing, copywriting, sales, problem-solving, and basic tech skills. Marketing helps you attract customers, copywriting helps you convert them, and systems thinking helps you scale efficiently.",
+  },
+  {
+    question: "What skills do you need to become a solopreneur?",
+    answer: "To become a solopreneur, you need a combination of creative and technical skills. These include communication, digital marketing, content creation, basic automation tools, and the ability to learn fast and adapt.",
   },
 ];
 
-// --- VIDEO SCHEMA ---
-const videoStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "VideoObject",
-  "name": "How to Succeed as a Solopreneur",
-  "description": "Learn how to build and scale your solopreneur business.",
-  "thumbnailUrl": `${SITE.website}/images/hero.jpg`,
-  "uploadDate": "2026-04-09",
-  "embedUrl": "https://www.youtube.com/embed/SLo8Iyc8gmU",
-  "publisher": {
-    "@type": "Organization",
-    "name": "5kmvp"
-  }
-};
-
-// --- SAFE IMAGE HANDLER ---
-const getOgImage = (post: PostType): string => {
-  const img = post.data.ogImage;
-
-  if (!img) return "/images/home.png";
-  if (typeof img === "string") return img;
-
-  return img.src || "/images/home.png";
-};
+const getOgImage = (post: PostType) =>
+  typeof post.data.ogImage === "string"
+    ? post.data.ogImage
+    : post.data.ogImage?.src || "/images/home.png";
 ---
 
-<Layout title={`Best Tools for Solopreneurs (2026) | ${SITE.title}`}>
+<Layout title={`Best Tools for Solopreneurs | ${SITE.title}`}>
 
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(videoStructuredData)}
+<Header />
+
+<main class="app-layout">
+
+<!-- HERO -->
+<section class="py-16 text-center">
+  {sortedPosts.length > 0 && (
+    <a href={`/posts/${sortedPosts[0].slug}/`}>
+      <img src={getOgImage(sortedPosts[0])} class="mx-auto rounded-lg" />
+      <h1 class="text-4xl font-bold mt-4">
+        {sortedPosts[0].data.title}
+      </h1>
+    </a>
+  )}
+</section>
+
+<!-- SEO INTRO -->
+<section class="max-w-3xl mx-auto text-center py-6">
+  This site helps solopreneurs discover tools to build, automate, and scale.
+</section>
+
+<!-- START HERE -->
+<section class="text-center py-10">
+  <h2 class="text-2xl font-bold">Start Here</h2>
+</section>
+
+<!-- VIDEO -->
+<section class="py-12 text-center">
+  <iframe
+    width="800"
+    height="450"
+    src="https://www.youtube.com/embed/SLo8Iyc8gmU"
   />
+</section>
 
-  <Header />
+<!-- AUTHOR -->
+<section class="py-10 text-center">
+  {authors.map(a => (
+    <div>
+      <img src={a.image} class="w-20 h-20 rounded-full mx-auto" />
+      <h3>{a.name}</h3>
+      <p>{a.bio}</p>
+    </div>
+  ))}
+</section>
 
-  <main id="main-content" class="app-layout">
+<!-- HIGHLIGHTS -->
+<section class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto py-12">
+  {highlightBlocks.map(block => (
+    <HighlightBox title={block.title}>
+      <ul>
+        {block.items.map(i => <li>{i}</li>)}
+      </ul>
+    </HighlightBox>
+  ))}
+</section>
 
-    <!-- HERO -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900">
-      {sortedPosts.length > 0 && (
-        <a
-          href={`/posts/${sortedPosts[0].slug}/`}
-          class="block w-full max-w-6xl mx-auto px-4 rounded-xl overflow-hidden shadow-lg"
-        >
-          <img
-            src={getOgImage(sortedPosts[0])}
-            alt={sortedPosts[0].data.title}
-            class="w-full rounded-lg mb-6"
-          />
-
-          <div class="mt-6 text-center">
-            <h1 class="text-4xl font-bold mb-3">
-              {sortedPosts[0].data.title}
-            </h1>
-            <p class="text-lg text-gray-600 dark:text-gray-300">
-              {sortedPosts[0].data.description}
-            </p>
-          </div>
-        </a>
-      )}
-    </section>
-
-    <!-- SEO INTRO -->
-    <section class="max-w-4xl mx-auto px-4 py-6 text-center">
-      <p class="text-gray-600 dark:text-gray-300">
-        This site helps solopreneurs discover the best tools to build MVPs,
-        automate workflows, and scale their businesses faster. Learn which tools
-        to use at each stage—from idea validation to growth.
-      </p>
-    </section>
-
-    <!-- START HERE (SEO POWER SECTION) -->
-    <section class="max-w-5xl mx-auto px-4 py-12 text-center">
-      <h2 class="text-2xl font-bold mb-6">Start Here</h2>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <a href="/posts/best-tools-for-solopreneurs" class="block p-6 border rounded-xl hover:shadow-lg">
-          Best Tools for Solopreneurs (Complete Guide)
-        </a>
-
-        <a href="/posts/tools-to-build-an-mvp" class="block p-6 border rounded-xl hover:shadow-lg">
-          Tools to Build an MVP
-        </a>
-
-        <a href="/posts/market-demand-for-solopreneur-tools" class="block p-6 border rounded-xl hover:shadow-lg">
-          Market Demand for Solopreneur Tools 
-        </a>
-
-        <a href="/posts/how-solopreneurs-stay-productive" class="block p-6 border rounded-xl hover:shadow-lg">
-          Productivity Systems for Solopreneurs
-        </a>
-      </div>
-    </section>
-
-    <!-- KEEP EVERYTHING BELOW SAME -->
-
-    <!-- VIDEO -->
-        <section class="max-w-5xl mx-auto px-4 py-16 text-center">
-  <h2 class="text-3xl font-bold mb-6">
-    How to Succeed as a Solopreneur
-  </h2>
-
-  <div class="aspect-video">
-    <iframe 
-      class="w-full h-full rounded-xl shadow-lg"
-      src="https://www.youtube.com/embed/SLo8Iyc8gmU"
-      title="How to Succeed as a Solopreneur"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+<!-- FEATURED POSTS -->
+<section class="max-w-6xl mx-auto py-12">
+  <h2 class="text-3xl font-bold mb-6">Featured Posts</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+    {featuredPosts.map(post => (
+      <Card {...post} href={`/posts/${post.slug}/`} />
+    ))}
   </div>
 </section>
 
-    <!-- AUTHOR -->
-    <section class="max-w-7xl mx-auto px-4 py-12 border-y">
-      {authors.map((author: typeof authors[number]) => (
-        <div class="flex items-center gap-4">
-          <img src={author.image} alt={author.name} class="w-20 h-20 rounded-full" />
-          <div>
-            <h3 class="text-xl font-semibold">{author.name}</h3>
-            <p>{author.bio}</p>
-          </div>
-        </div>
-      ))}
-    </section>
+<!-- LATEST POSTS -->
+<section class="max-w-6xl mx-auto py-12">
+  <h2 class="text-3xl font-bold mb-6">Latest Posts</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+    {recentPosts.map(post => (
+      <a href={`/posts/${post.slug}/`}>
+        <h3>{post.data.title}</h3>
+      </a>
+    ))}
+  </div>
+</section>
 
-    <!-- HIGHLIGHTS -->
-    <section class="max-w-7xl mx-auto px-4 py-12">
-      <div class="grid md:grid-cols-3 gap-8">
-        {highlightBlocks.map((block: typeof highlightBlocks[number]) => (
-          <HighlightBox title={block.title}>
-            <ul class="space-y-2">
-              {block.items.map((item: string) => <li>{item}</li>)}
-            </ul>
-          </HighlightBox>
+<!-- CATEGORY -->
+<section class="max-w-6xl mx-auto py-12">
+  <h2 class="text-3xl font-bold mb-6">Explore by Category</h2>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    {categoryHighlights.map(c => (
+      <div>
+        <h3 class="font-bold">{c.category}</h3>
+        {c.posts.map(p => (
+          <a href={`/posts/${p.slug}/`}>{p.data.title}</a>
         ))}
       </div>
-    </section>
+    ))}
+  </div>
+</section>
 
-    <!-- FEATURED -->
-    {featuredPosts.length > 0 && (
-      <section class="max-w-7xl mx-auto px-4 py-12">
-        <h2 class="text-3xl font-bold mb-6">Featured</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          {featuredPosts.map((post: PostType) => (
-            <Card {...post} href={`/posts/${post.slug}/`} />
-          ))}
-        </div>
-      </section>
-    )}
+<!-- 🔥 ONLY TOOLSCOUT FEATURES ON HOMEPAGE -->
 
-    <!-- LATEST -->
-    <section class="max-w-7xl mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold mb-6">Latest Articles</h2>
+<section class="max-w-6xl mx-auto py-16">
 
-      <div class="grid md:grid-cols-3 gap-6">
-        {recentPosts.slice(0, SITE.postPerIndex).map((post: PostType) => (
-          <a href={`/posts/${post.slug}/`} class="block">
-            <img src={getOgImage(post)} alt={post.data.title} class="rounded mb-2" />
-            <h3>{post.data.title}</h3>
-          </a>
-        ))}
+  <h2 class="text-3xl font-bold text-center mb-8">
+    🔥 Live Rankings
+  </h2>
+
+  <iframe
+    src="https://01knzbq656vrbd7v1gjphkm0jx.hercules-dev.com/widget/rankings"
+    width="100%"
+    height="500"
+    style="border:none;border-radius:12px;"
+  />
+
+  <h2 class="text-3xl font-bold text-center mt-16 mb-8">
+    ⭐ Featured Reviews
+  </h2>
+
+  <iframe
+    src="https://01knzbq656vrbd7v1gjphkm0jx.hercules-dev.com/widget/reviews"
+    width="100%"
+    height="600"
+    style="border:none;border-radius:12px;"
+  />
+
+</section>
+
+<!-- FAQ -->
+<section class="max-w-7xl mx-auto px-4 py-12 bg-gray-50 dark:bg-gray-900 rounded-xl">
+  <h2 class="text-3xl font-bold mb-6">
+    Frequently Asked Questions (Solopreneur Tools Guide)
+  </h2>
+  <div class="space-y-6">
+    {faqItems.map(f => (
+      <div class="p-6 rounded-xl shadow bg-white dark:bg-gray-800">
+        <h3 class="font-semibold mb-2 text-lg">{f.question}</h3>
+        <p>{f.answer}</p>
       </div>
-    </section>
+    ))}
+  </div>
+</section>
 
-    <!-- CATEGORY -->
-    <section class="max-w-7xl mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold mb-6">Explore by Category</h2>
+<!-- CTA -->
+<section class="text-center py-10">
+  <LinkButton href="/posts/">
+    View All Posts <IconArrowRight />
+  </LinkButton>
+</section>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        {categoryHighlights.map(({ category, posts }) => (
-          <div>
-            <h3 class="text-xl font-semibold capitalize mb-3">
-              {category}
-            </h3>
+</main>
 
-            {posts.length === 0 ? (
-              <p>No posts yet</p>
-            ) : (
-              posts.map((post: PostType) => (
-                <a href={`/posts/${post.slug}/`} class="block mb-2">
-                  <h4>{post.data.title}</h4>
-                </a>
-              ))
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
+<Footer />
 
-    <!-- FAQ -->
-    <section class="max-w-7xl mx-auto px-4 py-12 bg-gray-50 dark:bg-gray-900 rounded-xl">
-      <h2 class="text-3xl font-bold mb-6">Frequently Asked Questions</h2>
-
-      <div class="space-y-6">
-        {faqItems.map((item: typeof faqItems[number]) => (
-          <div class="p-6 rounded-xl shadow">
-            <h3 class="font-semibold mb-2">{item.question}</h3>
-            <p>{item.answer}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <div class="text-center my-10">
-      <LinkButton href="/posts/">
-        All Posts
-        <IconArrowRight />
-      </LinkButton>
-    </div>
-
-  </main>
-
-  <Footer />
 </Layout>
