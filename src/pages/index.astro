@@ -9,6 +9,7 @@ import HighlightBox from "@/components/HighlightBox.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
+import ToolScout from "@/components/ToolScout";
 
 const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
@@ -200,32 +201,15 @@ const getOgImage = (post: PostType) =>
   </div>
 </section>
 
-<!-- 🔥 ONLY TOOLSCOUT FEATURES ON HOMEPAGE -->
-
+<!-- TOOLSCOUT: LIVE RANKINGS, REVIEWS, COMPARE & AI CHATBOT -->
 <section class="max-w-6xl mx-auto py-16">
-
-  <h2 class="text-3xl font-bold text-center mb-8">
-    🔥 Live Rankings
+  <h2 class="text-3xl font-bold text-center mb-2">
+    🔥 Live Tool Rankings & Reviews
   </h2>
-
-  <iframe
-    src="https://01knzbq656vrbd7v1gjphkm0jx.hercules-dev.com/widget/rankings"
-    width="100%"
-    height="500"
-    style="border:none;border-radius:12px;"
-  />
-
-  <h2 class="text-3xl font-bold text-center mt-16 mb-8">
-    ⭐ Featured Reviews
-  </h2>
-
-  <iframe
-    src="https://01knzbq656vrbd7v1gjphkm0jx.hercules-dev.com/widget/reviews"
-    width="100%"
-    height="600"
-    style="border:none;border-radius:12px;"
-  />
-
+  <p class="text-center text-gray-500 dark:text-gray-400 mb-10">
+    Ranked by real data from G2, Product Hunt, Reddit, Trustpilot & Quora
+  </p>
+  <ToolScout client:load />
 </section>
 
 <!-- FAQ -->
