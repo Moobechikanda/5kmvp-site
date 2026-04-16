@@ -2,7 +2,7 @@
 author: pretorius
 pubDatetime: 2026-03-22T10:00:00Z
 modDatetime: 2026-03-22T10:00:00Z
-title: Market Demand For Solopreneur Tools In 2025
+title: Market Demand For Solopreneur Tools In 2026
 slug: market-demand-for-solopreneur-tools
 featured: true
 draft: false
@@ -13,7 +13,7 @@ tags:
   - productivity
   - business-tech
 description: |
-  A comprehensive guide to the rise in demand for AI and automation tools for solopreneurs in 2025. 
+  A comprehensive guide to the rise in demand for AI and automation tools for solopreneurs in 2026. 
   This post covers content creation, marketing, finance, project management, 
   AI-powered workflows, and detailed comparisons to help solo founders scale.
 ---
