@@ -17,12 +17,17 @@
     },
     {
       "source": "/blog/2013/09/21/5-things-you-need-to-know-before-trying-to-scale/",
-      "destination": "/posts/top-problems-solopreneurs-want-to-solve",
+      "destination": "/posts/top-pronlems-solopreneurs-want-to-solve-and-how-to-fix-them",
       "permanent": true
     },
     {
       "source": "/blog/2013/09/21/5-things-you-need-to-know-before-trying-to-scale",
-      "destination": "/posts/top-problems-solopreneurs-want-to-solve",
+      "destination": "/posts/top-pronlems-solopreneurs-want-to-solve-and-how-to-fix-them",
+      "permanent": true
+    },
+    {
+      "source": "/building-an-mvp-choice-by-choice-the-boso-sto",
+      "destination": "/posts/tools-to-build-an-mvp",
       "permanent": true
     },
     {
@@ -37,7 +42,7 @@
     },
     {
       "source": "/posts/top-problems-solopreneurs-want-to-solve",
-      "destination": "/posts/top-pronlems-solopreneurs-want-to-solve-and-how-to-fix-them",
+      "destination": "/posts/top-problems-solopreneurs-want-to-solve-and-how-to-fix-them",
       "permanent": true
     }
   ]
