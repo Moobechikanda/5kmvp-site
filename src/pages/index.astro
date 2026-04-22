@@ -35,27 +35,15 @@ const categoryHighlights = highlightCategories.map(category => {
 const highlightBlocks = [
   {
     title: "Productivity Tools",
-    items: [
-      "Notion",
-      "ClickUp",
-      "Zapier"
-    ],
+    items: ["Notion", "ClickUp", "Zapier"],
   },
   {
     title: "Marketing Tools",
-    items: [
-      "ConvertKit",
-      "Buffer",
-      "Google Analytics"
-    ],
+    items: ["ConvertKit", "Buffer", "Google Analytics"],
   },
   {
     title: "Business Tools",
-    items: [
-      "Stripe",
-      "Webflow",
-      "Canva"
-    ],
+    items: ["Stripe", "Webflow", "Canva"],
   },
 ];
 
@@ -70,31 +58,38 @@ const authors = [
 const faqItems = [
   {
     question: "What do solopreneurs need to succeed in 2026?",
-    answer: "Solopreneurs need three core things: tools, systems, and skills. Tools help you execute faster (like Notion, Canva, Zapier), systems help you stay organized (like workflows, automation, and templates), and skills like marketing, copywriting, and sales help you generate income. Without all three working together, growth becomes inconsistent and slow.",
+    answer:
+      "Solopreneurs need three core things: tools, systems, and skills. Tools help you execute faster (like Notion, Canva, Zapier), systems help you stay organized (like workflows, automation, and templates), and skills like marketing, copywriting, and sales help you generate income. Without all three working together, growth becomes inconsistent and slow.",
   },
   {
     question: "How do I choose the best tools as a solopreneur?",
-    answer: "The best tools are not the most popular ones — they are the ones that reduce friction in your workflow. Choose tools based on ease of use (can you learn it in under 1 day?), integration (does it connect with other tools?), cost efficiency (does it save more time than it costs money?), and stage of business (idea, MVP, growth, scaling). Beginners should focus on Notion, Canva, and Google Workspace before advanced tools like automation stacks.",
+    answer:
+      "The best tools are not the most popular ones — they are the ones that reduce friction in your workflow. Choose tools based on ease of use, integration, cost efficiency, and stage of business. Beginners should focus on Notion, Canva, and Google Workspace.",
   },
   {
     question: "What tools do most successful solopreneurs use daily?",
-    answer: "Most successful solopreneurs rely on a small but powerful tech stack: Notion for planning and documentation, Canva for design and branding, Zapier or Make for automation, Google Docs/Sheets for lightweight operations, and ChatGPT/AI tools for content and research. The key is not using many tools, but building a simple system that connects a few powerful ones.",
+    answer:
+      "Most successful solopreneurs rely on Notion, Canva, Zapier, Google Docs/Sheets, and AI tools like ChatGPT. The key is not using many tools, but building a simple system.",
   },
   {
     question: "How do solopreneurs stay productive without burnout?",
-    answer: "Productivity comes from systems, not motivation. Solopreneurs avoid burnout by time blocking their day (deep work vs admin work), automating repetitive tasks, using templates instead of starting from scratch, and focusing on high-impact tasks only (80/20 rule). Burnout usually happens when everything is manual — systems fix that.",
+    answer:
+      "Productivity comes from systems, not motivation. Time blocking, automation, templates, and focusing on high-impact tasks prevent burnout.",
   },
   {
     question: "Can solopreneurs build profitable businesses alone?",
-    answer: "Yes — modern solopreneurs can build highly profitable businesses alone using digital tools and automation. The key shift is leverage: AI replaces repetitive content creation, automation replaces manual workflows, and digital products replace physical operations. Many solopreneurs now run 6-figure businesses without employees by using systems instead of manpower.",
+    answer:
+      "Yes. AI, automation, and digital products now allow solopreneurs to build 6-figure businesses without employees.",
   },
   {
     question: "What skills are useful to become a successful solopreneur?",
-    answer: "The most important skills include marketing, copywriting, sales, problem-solving, and basic tech skills. Marketing helps you attract customers, copywriting helps you convert them, and systems thinking helps you scale efficiently.",
+    answer:
+      "Marketing, copywriting, sales, problem-solving, and basic tech skills are the most important.",
   },
   {
     question: "What skills do you need to become a solopreneur?",
-    answer: "To become a solopreneur, you need a combination of creative and technical skills. These include communication, digital marketing, content creation, basic automation tools, and the ability to learn fast and adapt.",
+    answer:
+      "Communication, digital marketing, content creation, automation tools, and adaptability are essential.",
   },
 ];
 
@@ -105,6 +100,52 @@ const getOgImage = (post: PostType) =>
 ---
 
 <Layout title={`Best Tools for Solopreneurs | ${SITE.title}`}>
+
+{/* ================= SEO SCHEMA BLOCKS ================= */}
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: `Best Tools for Solopreneurs | ${SITE.title}`,
+  description: SITE.desc,
+  author: {
+    "@type": "Person",
+    name: "Moobe Chikanda",
+  },
+  mainEntityOfPage: SITE.url,
+})} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map(f => ({
+    "@type": "Question",
+    name: f.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: f.answer,
+    },
+  })),
+})} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE.url,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Solopreneur Tools",
+      item: SITE.url + "/",
+    },
+  ],
+})} />
+{/* =================================================== */}
 
 <Header />
 
@@ -201,7 +242,7 @@ const getOgImage = (post: PostType) =>
   </div>
 </section>
 
-<!-- TOOLSCOUT: LIVE RANKINGS, REVIEWS, COMPARE & AI CHATBOT -->
+<!-- TOOLSCOUT -->
 <section class="max-w-6xl mx-auto py-16">
   <h2 class="text-3xl font-bold text-center mb-2">
     🔥 Live Tool Rankings & Reviews
