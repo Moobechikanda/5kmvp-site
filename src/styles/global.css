@@ -7,20 +7,28 @@
 /* Light theme variables */
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
+  --background: #f9fafb;
+  --foreground: #111827;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --muted: #e5e7eb;
+  --border: #d1d5db;
+  --card: #ffffff;
+  --card-foreground: #1f2937;
+  --subtle: #6b7280;
 }
 
 /* Dark theme variables */
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --muted: #1e293b;
+  --border: #334155;
+  --card: #1e293b;
+  --card-foreground: #e2e8f0;
+  --subtle: #94a3b8;
 }
 
 /* Map theme variables to Tailwind */
@@ -29,24 +37,28 @@ html[data-theme="dark"] {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-subtle: var(--subtle);
 }
 
 @layer base {
   /* Base resets */
   * {
     @apply border-border outline-accent/75;
-    scrollbar-width: auto;
+    scrollbar-width: thin;
     scrollbar-color: var(--color-muted) transparent;
   }
 
   html {
-    @apply overflow-y-scroll scroll-smooth;
+    @apply overflow-y-scroll;
   }
 
   body {
-    @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/30 selection:text-foreground;
   }
 
   a,
@@ -61,18 +73,17 @@ html[data-theme="dark"] {
 
   /* Highlight box styling for Key Takeaways */
   .highlight-box {
-    @apply p-6 rounded-lg border-l-4 mb-6 shadow-lg;
-    background-color: #fff3b0; /* bright yellow for light mode */
-    border-color: #ffd700; /* stronger border */
-    color: #1a1a1a; /* dark text for readability */
+    @apply rounded-xl border-l-4 p-5 mb-6 shadow-sm;
+    background-color: var(--card);
+    border-color: var(--accent);
+    color: var(--foreground);
     font-weight: 500;
   }
 
   html[data-theme="dark"] .highlight-box {
-    background-color: #78350f; /* rich dark yellow/orange */
-    border-color: #f59e0b; /* brighter accent border */
-    color: #fef3c7; /* light text */
-    font-weight: 500;
+    background-color: var(--muted);
+    border-color: var(--accent);
+    color: var(--foreground);
   }
 
   /* Extra scroll margin for anchors */
@@ -83,11 +94,11 @@ html[data-theme="dark"] {
 
 /* Utility classes */
 @utility max-w-app {
-  @apply max-w-3xl;
+  max-width: 72rem; /* 1152px — wide enough for 3-col grids */
 }
 
 @utility app-layout {
-  @apply mx-auto w-full max-w-app px-4;
+  @apply mx-auto w-full max-w-app px-4 sm:px-6 lg:px-8;
 }
 
 /* Active nav link styling */

@@ -11,8 +11,7 @@ tags:
   - solopreneur-tools
   - smb-tools
   - ai-design
-  - productivity
-  - marketing
+   -tools
 description: Discover the best design tools for solopreneurs and SMBs in 2026 including Canva, Figma, Adobe Express, and AI-powered tools that help create professional designs faster and cheaper.
 ---
 

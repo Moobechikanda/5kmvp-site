@@ -102,18 +102,21 @@ const getOgImage = (post: PostType) =>
 <Layout title={`Best Tools for Solopreneurs | ${SITE.title}`}>
 
 {/* ================= SEO SCHEMA BLOCKS ================= */}
+
+<!-- ✅ Fixed: was "BlogPosting" — homepage should be "WebSite" -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: `Best Tools for Solopreneurs | ${SITE.title}`,
+  "@type": "WebSite",
+  name: SITE.title,
   description: SITE.desc,
+  url: SITE.url,
   author: {
     "@type": "Person",
     name: "Moobe Chikanda",
   },
-  mainEntityOfPage: SITE.url,
 })} />
 
+<!-- ✅ Unchanged — FAQPage schema was already correct -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -127,6 +130,7 @@ const getOgImage = (post: PostType) =>
   })),
 })} />
 
+<!-- ✅ Fixed: BreadcrumbList had duplicate URLs for position 1 and 2 — position 2 removed since it pointed to the same homepage -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -137,14 +141,9 @@ const getOgImage = (post: PostType) =>
       name: "Home",
       item: SITE.url,
     },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Solopreneur Tools",
-      item: SITE.url + "/",
-    },
   ],
 })} />
+
 {/* =================================================== */}
 
 <Header />
@@ -152,11 +151,11 @@ const getOgImage = (post: PostType) =>
 <main class="app-layout">
 
 <!-- HERO -->
-<section class="py-16 text-center">
+<section class="py-12 text-center sm:py-16">
   {sortedPosts.length > 0 && (
     <a href={`/posts/${sortedPosts[0].slug}/`}>
-      <img src={getOgImage(sortedPosts[0])} class="mx-auto rounded-lg" />
-      <h1 class="text-4xl font-bold mt-4">
+      <img src={getOgImage(sortedPosts[0])} class="mx-auto w-full rounded-lg object-cover" />
+      <h1 class="mt-4 text-2xl font-bold sm:text-4xl">
         {sortedPosts[0].data.title}
       </h1>
     </a>
@@ -164,50 +163,54 @@ const getOgImage = (post: PostType) =>
 </section>
 
 <!-- SEO INTRO -->
-<section class="max-w-3xl mx-auto text-center py-6">
+<section class="py-6 text-center">
   This site helps solopreneurs discover tools to build, automate, and scale.
 </section>
 
 <!-- START HERE -->
-<section class="text-center py-10">
+<section class="py-10 text-center">
   <h2 class="text-2xl font-bold">Start Here</h2>
 </section>
 
-<!-- VIDEO -->
-<section class="py-12 text-center">
-  <iframe
-    width="800"
-    height="450"
-    src="https://www.youtube.com/embed/SLo8Iyc8gmU"
-  />
+<!-- VIDEO — responsive 16:9 wrapper -->
+<section class="py-12">
+  <div class="relative w-full" style="padding-bottom: 56.25%;">
+    <iframe
+      class="absolute left-0 top-0 h-full w-full rounded-lg"
+      src="https://www.youtube.com/embed/SLo8Iyc8gmU"
+      allowfullscreen
+    />
+  </div>
 </section>
 
 <!-- AUTHOR -->
 <section class="py-10 text-center">
   {authors.map(a => (
     <div>
-      <img src={a.image} class="w-20 h-20 rounded-full mx-auto" />
-      <h3>{a.name}</h3>
-      <p>{a.bio}</p>
+      <img src={a.image} class="mx-auto h-20 w-20 rounded-full" />
+      <h3 class="mt-3 font-bold">{a.name}</h3>
+      <p class="text-sm text-subtle">{a.bio}</p>
     </div>
   ))}
 </section>
 
 <!-- HIGHLIGHTS -->
-<section class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto py-12">
-  {highlightBlocks.map(block => (
-    <HighlightBox title={block.title}>
-      <ul>
-        {block.items.map(i => <li>{i}</li>)}
-      </ul>
-    </HighlightBox>
-  ))}
+<section class="py-12">
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+    {highlightBlocks.map(block => (
+      <HighlightBox title={block.title}>
+        <ul>
+          {block.items.map(i => <li>{i}</li>)}
+        </ul>
+      </HighlightBox>
+    ))}
+  </div>
 </section>
 
 <!-- FEATURED POSTS -->
-<section class="max-w-6xl mx-auto py-12">
-  <h2 class="text-3xl font-bold mb-6">Featured Posts</h2>
-  <div class="grid md:grid-cols-3 gap-6">
+<section class="py-12">
+  <h2 class="mb-6 text-2xl font-bold sm:text-3xl">Featured Posts</h2>
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
     {featuredPosts.map(post => (
       <Card {...post} href={`/posts/${post.slug}/`} />
     ))}
@@ -215,61 +218,64 @@ const getOgImage = (post: PostType) =>
 </section>
 
 <!-- LATEST POSTS -->
-<section class="max-w-6xl mx-auto py-12">
-  <h2 class="text-3xl font-bold mb-6">Latest Posts</h2>
-  <div class="grid md:grid-cols-3 gap-6">
+<section class="py-12">
+  <h2 class="mb-6 text-2xl font-bold sm:text-3xl">Latest Posts</h2>
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
     {recentPosts.map(post => (
-      <a href={`/posts/${post.slug}/`}>
-        <h3>{post.data.title}</h3>
+      <a href={`/posts/${post.slug}/`} class="block rounded-lg p-3 hover:text-accent">
+        <h3 class="text-base font-medium">{post.data.title}</h3>
       </a>
     ))}
   </div>
 </section>
 
 <!-- CATEGORY -->
-<section class="max-w-6xl mx-auto py-12">
-  <h2 class="text-3xl font-bold mb-6">Explore by Category</h2>
-
-  <div class="grid md:grid-cols-3 gap-8">
+<section class="py-12">
+  <h2 class="mb-6 text-2xl font-bold sm:text-3xl">Explore by Category</h2>
+  <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
     {categoryHighlights.map(c => (
       <div>
-        <h3 class="font-bold">{c.category}</h3>
-        {c.posts.map(p => (
-          <a href={`/posts/${p.slug}/`}>{p.data.title}</a>
-        ))}
+        <h3 class="font-bold capitalize">{c.category}</h3>
+        <div class="mt-3 flex flex-col gap-3">
+          {c.posts.map(p => (
+            <a href={`/posts/${p.slug}/`} class="block hover:text-accent">
+              {p.data.title}
+            </a>
+          ))}
+        </div>
       </div>
     ))}
   </div>
 </section>
 
 <!-- TOOLSCOUT -->
-<section class="max-w-6xl mx-auto py-16">
-  <h2 class="text-3xl font-bold text-center mb-2">
+<section class="py-16">
+  <h2 class="mb-2 text-2xl font-bold text-center sm:text-3xl">
     🔥 Live Tool Rankings & Reviews
   </h2>
-  <p class="text-center text-gray-500 dark:text-gray-400 mb-10">
+  <p class="mb-10 text-center text-subtle">
     Ranked by real data from G2, Product Hunt, Reddit, Trustpilot & Quora
   </p>
   <ToolScout client:load />
 </section>
 
 <!-- FAQ -->
-<section class="max-w-7xl mx-auto px-4 py-12 bg-gray-50 dark:bg-gray-900 rounded-xl">
-  <h2 class="text-3xl font-bold mb-6">
+<section class="py-12 rounded-xl" style="background-color: var(--muted);">
+  <h2 class="mb-6 text-2xl font-bold sm:text-3xl">
     Frequently Asked Questions (Solopreneur Tools Guide)
   </h2>
-  <div class="space-y-6">
+  <div class="space-y-4">
     {faqItems.map(f => (
-      <div class="p-6 rounded-xl shadow bg-white dark:bg-gray-800">
-        <h3 class="font-semibold mb-2 text-lg">{f.question}</h3>
-        <p>{f.answer}</p>
+      <div class="rounded-xl p-4 shadow-sm sm:p-6" style="background-color: var(--card);">
+        <h3 class="mb-2 text-base font-semibold sm:text-lg">{f.question}</h3>
+        <p class="text-sm text-subtle sm:text-base">{f.answer}</p>
       </div>
     ))}
   </div>
 </section>
 
 <!-- CTA -->
-<section class="text-center py-10">
+<section class="py-10 text-center">
   <LinkButton href="/posts/">
     View All Posts <IconArrowRight />
   </LinkButton>

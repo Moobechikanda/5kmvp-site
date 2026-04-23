@@ -82,51 +82,33 @@ const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
   currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
 ---
-<script type="application/ld+json">
-{
+
+<!-- ✅ Single, correct BlogPosting schema using real Astro variables -->
+<script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "{frontmatter.title}",
-  "description": "{frontmatter.description}",
-  "datePublished": "{frontmatter.pubDatetime}",
-  "author": {
+  headline: title,
+  description: description,
+  datePublished: pubDatetime?.toISOString(),
+  dateModified: modDatetime?.toISOString() ?? pubDatetime?.toISOString(),
+  author: {
     "@type": "Person",
-    "name": "Moobe"
+    name: author || "Moobe"
   },
-  "publisher": {
+  publisher: {
     "@type": "Organization",
-    "name": "Your Blog Name"
+    name: SITE.title
   },
-  "mainEntityOfPage": {
+  image: ogImage,
+  mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "{Astro.url}"
+    "@id": Astro.url.href
   }
-}
-</script>
+})} />
 
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "BlogPosting",
- "headline": "{frontmatter.title}",
- "description": "{frontmatter.description}",
- "datePublished": "{frontmatter.pubDatetime}",
- "author": {
-   "@type": "Person",
-   "name": "Moobe"
- },
- "publisher": {
-   "@type": "Organization",
-   "name": "Your Blog Name"
- },
- "mainEntityOfPage": {
-   "@type": "WebPage",
-   "@id": "{Astro.url}"
- }
-}
-</script>
 <Layout {...layoutProps}>
-<BreadcrumbSchema title={frontmatter.title} />
+  <!-- ✅ Fixed: was referencing frontmatter.title which doesn't exist here -->
+  <BreadcrumbSchema title={title} />
   <Header />
   <BackButton />
   <main
