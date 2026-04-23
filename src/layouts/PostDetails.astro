@@ -36,7 +36,8 @@ const {
   hideEditPost,
 } = post.data;
 
-const { Content } = await render(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
+const minutesRead = remarkPluginFrontmatter?.minutesRead as string | undefined;
 
 let ogImageUrl: string | undefined;
 
@@ -124,6 +125,12 @@ const nextPost =
     </h1>
     <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+      {minutesRead && (
+        <>
+          <span aria-hidden="true" class="text-subtle">·</span>
+          <span class="text-sm text-subtle">{minutesRead}</span>
+        </>
+      )}
       <span
         aria-hidden="true"
         class:list={[

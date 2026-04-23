@@ -10,6 +10,7 @@ import {
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
+import { remarkReadingTime } from "./src/utils/remarkReadingTime.ts";
 import { SITE } from "./src/config";
 
 export default defineConfig({
@@ -26,6 +27,7 @@ export default defineConfig({
     remarkPlugins: [
       remarkToc,
       [remarkCollapse, { test: "Table of contents" }],
+      remarkReadingTime, // ← added
     ],
     shikiConfig: {
       themes: { light: "min-light", dark: "night-owl" },
